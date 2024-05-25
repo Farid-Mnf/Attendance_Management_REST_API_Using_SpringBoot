@@ -19,7 +19,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
-    private String email; // remove or what ? any other properties?
+    private String email;
 
     @OneToMany(mappedBy = "student")
     private List<AttendanceRecord> attendanceRecords;

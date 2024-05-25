@@ -20,13 +20,10 @@ public class Course {
     private UUID id;
     private String name;
     private String description;
-
     @ManyToOne
     private Instructor instructor;
-
     @OneToMany(mappedBy = "course")
     private List<Lecture> lectures;
-
     @OneToMany(mappedBy = "course")
     private List<Enrollment> enrollments;
 

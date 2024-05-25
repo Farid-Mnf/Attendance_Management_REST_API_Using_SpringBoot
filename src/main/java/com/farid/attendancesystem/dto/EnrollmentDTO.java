@@ -1,6 +1,5 @@
-package com.farid.attendancesystem.entity;
+package com.farid.attendancesystem.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,21 +8,13 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Enrollment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+public class EnrollmentDTO {
     private UUID id;
-
-    @ManyToOne
-    private Student student;
-
-    @ManyToOne
-    private Course course;
-
+    private StudentDTO studentDTO;
+    private CourseDTO courseDTO;
     private LocalDate enrollmentDate;
 }
