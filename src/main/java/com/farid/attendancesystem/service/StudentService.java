@@ -26,6 +26,8 @@ public class StudentService {
     public void deleteStudent(UUID id){
         if(studentRepository.existsById(id)){
             studentRepository.deleteById(id);
+        }else{
+            throw new RuntimeException("can't delete student");
         }
     }
 
@@ -45,7 +47,7 @@ public class StudentService {
     }
 
     public StudentDTO getStudent(UUID id){
-        Student student = null;
+        Student student;
         student = studentRepository.findById(id).orElseThrow(() -> new RuntimeException("course not found with id: " + id));
         return StudentDTO.builder()
                 .id(student.getId())

@@ -33,6 +33,21 @@ public class StudentController {
         studentDTO = studentService.addStudent(studentDTO.getName(), studentDTO.getEmail());
         return new ResponseEntity<>(studentDTO, HttpStatus.OK);
     }
+    @DeleteMapping("student/{id}")
+    public ResponseEntity<String> deleteStudent(@PathVariable("id") UUID uuid){
+        try{
+            studentService.deleteStudent(uuid);
+            return new ResponseEntity<>("deleted successfully!", HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/student/{id}")
+    public ResponseEntity<StudentDTO> updateStudent(@PathVariable("id") UUID id,
+                                                    @RequestBody StudentDTO studentDTO){
+        studentDTO = studentService.updateStudent(id, studentDTO);
+        return new ResponseEntity<>(studentDTO, HttpStatus.OK);
+    }
 }
 
 

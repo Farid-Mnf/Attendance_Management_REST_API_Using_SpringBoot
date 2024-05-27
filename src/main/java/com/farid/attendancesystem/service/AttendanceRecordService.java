@@ -11,8 +11,6 @@ import com.farid.attendancesystem.repository.AttendanceRecordRepository;
 import com.farid.attendancesystem.repository.LectureRepository;
 import com.farid.attendancesystem.repository.StudentRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

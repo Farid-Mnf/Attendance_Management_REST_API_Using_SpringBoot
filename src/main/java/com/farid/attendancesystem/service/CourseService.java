@@ -39,7 +39,7 @@ public class CourseService {
     }
 
     public CourseDTO getCourse(UUID id){
-        Course course = null;
+        Course course;
         course = courseRepository.findById(id).orElseThrow(() -> new RuntimeException("course not found with id: " + id));
         return CourseDTO.builder().id(course.getId()).name(course.getName()).description(course.getDescription()).build();
     }

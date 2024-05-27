@@ -1,7 +1,6 @@
 package com.farid.attendancesystem.controller;
 
 import com.farid.attendancesystem.dto.AttendanceRecordDTO;
-import com.farid.attendancesystem.entity.AttendanceRecord;
 import com.farid.attendancesystem.service.AttendanceRecordService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
