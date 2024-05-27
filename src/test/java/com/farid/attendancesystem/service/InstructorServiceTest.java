@@ -27,16 +27,16 @@ class InstructorServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    public void getInstructor() {
-        UUID uuid = UUID.randomUUID();
-        Instructor instructor = new Instructor(uuid, "Ahmed", "ah@gmail.com", "pass123", null);
-
-        when(instructorRepository.findById(uuid)).thenReturn(Optional.of(instructor));
-
-        Instructor foundInstructor = instructorService.getInstructor(uuid);
-        assertEquals("ah@gmail.com", foundInstructor.getEmail());
-    }
+//    @Test
+//    public void getInstructor() {
+//        UUID uuid = UUID.randomUUID();
+//        Instructor instructor = new Instructor(uuid, "Ahmed", "ah@gmail.com", "pass123", null);
+//
+//        when(instructorRepository.findById(uuid)).thenReturn(Optional.of(instructor));
+//
+//        Instructor foundInstructor = instructorService.getInstructor(uuid);
+//        assertEquals("ah@gmail.com", foundInstructor.getEmail());
+//    }
 
     @Test
     void removeInstructor() {

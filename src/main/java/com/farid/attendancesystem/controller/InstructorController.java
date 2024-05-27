@@ -1,6 +1,6 @@
 package com.farid.attendancesystem.controller;
 
-import com.farid.attendancesystem.entity.Instructor;
+import com.farid.attendancesystem.dto.InstructorDTO;
 import com.farid.attendancesystem.service.InstructorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,17 +17,17 @@ public class InstructorController {
     private final InstructorService instructorService;
 
     @GetMapping("instructor/{id}")
-    public ResponseEntity<Instructor> getInstructor(@PathVariable("id") UUID uuid){
-        return new ResponseEntity<Instructor>(instructorService.getInstructor(uuid), HttpStatus.OK);
+    public ResponseEntity<InstructorDTO> getInstructor(@PathVariable("id") UUID uuid){
+        return new ResponseEntity<>(instructorService.getInstructor(uuid), HttpStatus.OK);
     }
 
     @GetMapping("instructor")
-    public ResponseEntity<List<Instructor>> getAllInstructor(){
-        return new ResponseEntity<List<Instructor>>(instructorService.getAllInstructors(), HttpStatus.OK);
+    public ResponseEntity<List<InstructorDTO>> getAllInstructor(){
+        return new ResponseEntity<>(instructorService.getAllInstructors(), HttpStatus.OK);
     }
 
     @PostMapping("instructor")
-    public ResponseEntity<Instructor> createInstructor(@RequestBody Instructor instructor){
+    public ResponseEntity<InstructorDTO> createInstructor(@RequestBody InstructorDTO instructor){
         return new ResponseEntity<>(instructorService.addInstructor(
                 instructor.getName(),
                 instructor.getEmail(),
@@ -42,8 +42,8 @@ public class InstructorController {
     }
 
     @PutMapping("instructor/{id}")
-    public ResponseEntity<Instructor> updateInstructor(@PathVariable("id") UUID uuid, @RequestBody Instructor instructor){
+    public ResponseEntity<InstructorDTO> updateInstructor(@PathVariable("id") UUID uuid, @RequestBody InstructorDTO instructor){
         instructor = instructorService.updateInstructor(uuid, instructor);
-        return new ResponseEntity<Instructor>(instructor, HttpStatus.OK);
+        return new ResponseEntity<>(instructor, HttpStatus.OK);
     }
 }

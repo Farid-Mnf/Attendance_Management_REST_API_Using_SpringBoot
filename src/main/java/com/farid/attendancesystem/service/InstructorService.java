@@ -1,11 +1,13 @@
 package com.farid.attendancesystem.service;
 
 
+import com.farid.attendancesystem.dto.InstructorDTO;
 import com.farid.attendancesystem.entity.Instructor;
 import com.farid.attendancesystem.repository.InstructorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,11 +20,17 @@ public class InstructorService {
         instructorRepository.deleteById(uuid);
     }
 
-    public List<Instructor> getAllInstructors(){
-        return instructorRepository.findAll();
+    public List<InstructorDTO> getAllInstructors(){
+        List<InstructorDTO> instructorDTOS = new ArrayList<>();
+        for(Instructor instructor: instructorRepository.findAll()){
+           instructorDTOS.add(InstructorDTO.builder().id(instructor.getId()).name(instructor.getName())
+                   .email(instructor.getEmail())
+                   .password(instructor.getPassword()).build());
+        }
+        return instructorDTOS;
     }
 
-    public Instructor updateInstructor(UUID uuid, Instructor updatedInstructor){
+    public InstructorDTO updateInstructor(UUID uuid, InstructorDTO updatedInstructor){
         if (!instructorRepository.existsById(uuid)) {
             throw new RuntimeException("Instructor not found with ID: " + uuid);
         }
@@ -34,16 +42,26 @@ public class InstructorService {
         existingInstructor.setEmail(updatedInstructor.getEmail());
         existingInstructor.setPassword(updatedInstructor.getPassword());
 
-        return instructorRepository.save(existingInstructor);
+        instructorRepository.save(existingInstructor);
+        return InstructorDTO.builder().id(uuid).name(existingInstructor.getName())
+                .email(existingInstructor.getEmail())
+                .password(existingInstructor.getPassword()).build();
     }
 
-    public Instructor addInstructor(String name, String email, String password){
+    public InstructorDTO addInstructor(String name, String email, String password){
         Instructor instructor = new Instructor(UUID.randomUUID(), name, email, password, null);
         instructor = instructorRepository.save(instructor);
-        return instructor;
+        return InstructorDTO.builder().id(instructor.getId())
+                .name(instructor.getName())
+                .email(instructor.getEmail())
+                .password(instructor.getPassword()).build();
     }
 
-    public Instructor getInstructor(UUID uuid){
-        return instructorRepository.findById(uuid).orElseThrow(() -> new RuntimeException("instructor not found with id: " + uuid));
+    public InstructorDTO getInstructor(UUID uuid){
+        Instructor instructor = instructorRepository.findById(uuid).orElseThrow(() -> new RuntimeException("instructor not found with id: " + uuid));
+        return InstructorDTO.builder().id(instructor.getId())
+                .name(instructor.getName())
+                .email(instructor.getEmail())
+                .password(instructor.getPassword()).build();
     }
 }

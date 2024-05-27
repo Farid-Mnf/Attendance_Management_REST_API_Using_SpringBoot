@@ -1,6 +1,6 @@
 package com.farid.attendancesystem.controller;
 
-import com.farid.attendancesystem.entity.Course;
+import com.farid.attendancesystem.dto.CourseDTO;
 import com.farid.attendancesystem.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,17 +19,17 @@ public class CourseController {
 
 
     @GetMapping("course/{id}")
-    public ResponseEntity<Course> getCourse(@PathVariable("id") UUID uuid){
+    public ResponseEntity<CourseDTO> getCourse(@PathVariable("id") UUID uuid){
         return new ResponseEntity<>(courseService.getCourse(uuid), HttpStatus.OK);
     }
 
     @GetMapping("course")
-    public ResponseEntity<List<Course>> getAllCourses(){
+    public ResponseEntity<List<CourseDTO>> getAllCourses(){
         return new ResponseEntity<>(courseService.getAllCourses(), HttpStatus.OK);
     }
 
     @PostMapping("course")
-    public ResponseEntity<Course> createCourse(@RequestBody Course course){
+    public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO course){
         return new ResponseEntity<>(courseService.addCourse(
                 course.getName(),
                 course.getDescription()), HttpStatus.CREATED);
@@ -43,10 +43,10 @@ public class CourseController {
     }
 
     @PutMapping("course/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable("id") UUID uuid,
-                                                       @RequestBody Course course
+    public ResponseEntity<CourseDTO> updateCourse(@PathVariable("id") UUID uuid,
+                                                       @RequestBody CourseDTO course
     ){
         course = courseService.updateCourse(uuid, course);
-        return new ResponseEntity<Course>(course, HttpStatus.OK);
+        return new ResponseEntity<>(course, HttpStatus.OK);
     }
 }

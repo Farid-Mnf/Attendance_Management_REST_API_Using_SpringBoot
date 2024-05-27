@@ -1,23 +1,18 @@
-package com.farid.attendancesystem.dto;
+package com.farid.attendancesystem.controller;
 
 import com.farid.attendancesystem.entity.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.UUID;
-
 @Builder
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class AttendanceRecordDTO {
-    private UUID id;
-    private StudentDTO studentDTO;
-    private LectureDTO lectureDTO;
+public class AttendanceRecordRequestDTO {
+    private UUID studentId;
+    private UUID lectureId;
     private Date date;
     private Status status;
-
 }

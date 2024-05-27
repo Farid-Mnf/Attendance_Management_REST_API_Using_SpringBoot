@@ -1,8 +1,8 @@
 package com.farid.attendancesystem.entity;
 
 public enum Status {
-    Present,
-    Absent,
-    Excused,
-    Late
+    PRESENT,
+    ABSENT,
+    EXCUSED,
+    LATE
 }

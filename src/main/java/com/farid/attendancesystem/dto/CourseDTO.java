@@ -1,5 +1,6 @@
 package com.farid.attendancesystem.dto;
 
+import com.farid.attendancesystem.entity.Course;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +20,7 @@ public class CourseDTO {
     private InstructorDTO instructorDTO;
     private List<LectureDTO> lectureDTOS;
     private List<EnrollmentDTO> enrollmentDTOS;
+    public CourseDTO(UUID id, String name, String description){
+        this(id, name, description, null, null, null);
+    }
 }
