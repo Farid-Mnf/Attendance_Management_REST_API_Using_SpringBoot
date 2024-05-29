@@ -6,7 +6,6 @@ import com.farid.attendancesystem.entity.Lecture;
 import com.farid.attendancesystem.repository.CourseRepository;
 import com.farid.attendancesystem.repository.LectureRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
