@@ -33,7 +33,7 @@ public class StudentService {
 
     public StudentDTO updateStudent(UUID id, StudentDTO updatedStudent){
         if(studentRepository.existsById(id)){
-            Student student = studentRepository.findById(id).orElseThrow(() -> new RuntimeException("course not found with id: " + id));
+            Student student = studentRepository.findById(id).orElseThrow(() -> new RuntimeException("student not found with id: " + id));
             student.setName(updatedStudent.getName());
             student.setEmail(updatedStudent.getEmail());
             student = studentRepository.save(student);
@@ -48,7 +48,7 @@ public class StudentService {
 
     public StudentDTO getStudent(UUID id){
         Student student;
-        student = studentRepository.findById(id).orElseThrow(() -> new RuntimeException("course not found with id: " + id));
+        student = studentRepository.findById(id).orElseThrow(() -> new RuntimeException("student not found with id: " + id));
         return StudentDTO.builder()
                 .id(student.getId())
                 .name(student.getName())
