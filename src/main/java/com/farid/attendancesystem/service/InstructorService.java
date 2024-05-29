@@ -49,8 +49,8 @@ public class InstructorService {
     }
 
     public InstructorDTO addInstructor(String name, String email, String password){
-        Instructor instructor = new Instructor(UUID.randomUUID(), name, email, password, null);
-        instructor = instructorRepository.save(instructor);
+        Instructor tempInstructor = Instructor.builder().name(name).email(email).password(password).build();
+        Instructor instructor = instructorRepository.save(tempInstructor);
         return InstructorDTO.builder().id(instructor.getId())
                 .name(instructor.getName())
                 .email(instructor.getEmail())
