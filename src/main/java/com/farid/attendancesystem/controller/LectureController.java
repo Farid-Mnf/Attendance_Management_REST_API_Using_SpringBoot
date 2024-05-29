@@ -1,5 +1,6 @@
 package com.farid.attendancesystem.controller;
 
+import com.farid.attendancesystem.controller.requestdtos.LectureRequestDTO;
 import com.farid.attendancesystem.dto.LectureDTO;
 import com.farid.attendancesystem.service.LectureService;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -14,6 +16,13 @@ import java.util.UUID;
 @RequestMapping("/api/lecture")
 public class LectureController {
     private final LectureService lectureService;
+
+    @GetMapping
+    public ResponseEntity<List<LectureDTO>> getLectures(){
+        return new ResponseEntity<>(
+                lectureService.getLectures(), HttpStatus.OK
+        );
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<LectureDTO> getLecture(@PathVariable("id")UUID uuid){

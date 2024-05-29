@@ -1,4 +1,4 @@
-package com.farid.attendancesystem.controller;
+package com.farid.attendancesystem.controller.requestdtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

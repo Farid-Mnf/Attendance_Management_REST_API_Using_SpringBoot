@@ -1,4 +1,4 @@
-package com.farid.attendancesystem.controller;
+package com.farid.attendancesystem.controller.requestdtos;
 
 import com.farid.attendancesystem.entity.Status;
 import lombok.AllArgsConstructor;

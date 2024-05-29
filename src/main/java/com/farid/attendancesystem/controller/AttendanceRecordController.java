@@ -1,5 +1,6 @@
 package com.farid.attendancesystem.controller;
 
+import com.farid.attendancesystem.controller.requestdtos.AttendanceRecordRequestDTO;
 import com.farid.attendancesystem.dto.AttendanceRecordDTO;
 import com.farid.attendancesystem.service.AttendanceRecordService;
 import lombok.AllArgsConstructor;
