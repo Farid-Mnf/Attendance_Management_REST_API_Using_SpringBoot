@@ -1,6 +1,8 @@
 package com.farid.attendancesystem.service;
 
-import com.farid.attendancesystem.dto.StudentDTO;
+import com.farid.attendancesystem.dto.*;
+import com.farid.attendancesystem.entity.AttendanceRecord;
+import com.farid.attendancesystem.entity.Enrollment;
 import com.farid.attendancesystem.entity.Student;
 import com.farid.attendancesystem.repository.StudentRepository;
 import lombok.AllArgsConstructor;
@@ -53,7 +55,59 @@ public class StudentService {
                 .id(student.getId())
                 .name(student.getName())
                 .email(student.getEmail())
+                .attendanceRecordDTOS(getAttendanceRecordsDTOS(student))
+                .enrollmentDTOS(getEnrollmentsDTOS(student))
                 .build();
+    }
+
+    public List<EnrollmentDTO> getEnrollmentsDTOS(Student student){
+        List<EnrollmentDTO> enrollmentDTOS = new ArrayList<>();
+
+        if(student.getEnrollments() != null)
+            for(Enrollment enrollment: student.getEnrollments()){
+                enrollmentDTOS.add(
+                        EnrollmentDTO.builder()
+                                .id(enrollment.getId())
+                                .courseDTO(CourseDTO.builder()
+                                        .id(enrollment.getCourse().getId())
+                                        .name(enrollment.getCourse().getName())
+                                        .build())
+                                .studentDTO(StudentDTO.builder()
+                                        .id(enrollment.getStudent().getId())
+                                        .name(enrollment.getStudent().getName()).build()).build()
+                );
+            }
+
+        return enrollmentDTOS;
+    }
+
+    public List<AttendanceRecordDTO> getAttendanceRecordsDTOS(Student student){
+        List<AttendanceRecordDTO> attendanceRecordDTOS = new ArrayList<>();
+
+        if(student.getAttendanceRecords() != null)
+            for(AttendanceRecord attendanceRecord: student.getAttendanceRecords()){
+                attendanceRecordDTOS.add(
+                        AttendanceRecordDTO.builder().id(attendanceRecord.getId())
+                                .date(attendanceRecord.getDate())
+                                .status(attendanceRecord.getStatus())
+                                .lectureDTO(
+                                        LectureDTO.builder()
+                                                .title(attendanceRecord.getLecture().getTitle())
+                                                .dateTime(attendanceRecord.getLecture().getDateTime())
+                                                .id(attendanceRecord.getLecture().getId()).build()
+                                )
+                                .studentDTO(
+                                        StudentDTO.builder()
+                                                .id(attendanceRecord.getStudent().getId())
+                                                .name(attendanceRecord.getStudent().getName())
+                                                .build()
+
+                                )
+                                .build()
+                );
+            }
+
+        return attendanceRecordDTOS;
     }
 
     public List<StudentDTO> getAllStudents() {

@@ -1,5 +1,7 @@
 package com.farid.attendancesystem.controller;
 
+import com.farid.attendancesystem.dto.AttendanceRecordDTO;
+import com.farid.attendancesystem.dto.EnrollmentDTO;
 import com.farid.attendancesystem.dto.StudentDTO;
 import com.farid.attendancesystem.service.StudentService;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,15 @@ public class StudentController {
     public ResponseEntity<StudentDTO> getStudent(@PathVariable("id")UUID uuid){
         return new ResponseEntity<>(studentService.getStudent(uuid), HttpStatus.OK);
     }
+    @GetMapping("student/{id}/attendance-records")
+    public ResponseEntity<List<AttendanceRecordDTO>> getStudentAttendanceRecords(@PathVariable("id") UUID uuid){
+        return new ResponseEntity<>(studentService.getStudent(uuid).getAttendanceRecordDTOS(), HttpStatus.OK);
+    }
 
+    @GetMapping("student/{id}/enrollments")
+    public ResponseEntity<List<EnrollmentDTO>> getStudentEnrollments(@PathVariable("id") UUID uuid){
+        return new ResponseEntity<>(studentService.getStudent(uuid).getEnrollmentDTOS(), HttpStatus.OK);
+    }
     @PostMapping("student")
     public ResponseEntity<StudentDTO> addStudent(@RequestBody StudentDTO studentDTO){
         studentDTO = studentService.addStudent(studentDTO.getName(), studentDTO.getEmail());
