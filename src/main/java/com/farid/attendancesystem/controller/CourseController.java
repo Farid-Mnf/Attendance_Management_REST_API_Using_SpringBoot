@@ -1,6 +1,7 @@
 package com.farid.attendancesystem.controller;
 
 import com.farid.attendancesystem.dto.CourseDTO;
+import com.farid.attendancesystem.dto.EnrollmentDTO;
 import com.farid.attendancesystem.dto.LectureDTO;
 import com.farid.attendancesystem.service.CourseService;
 import lombok.AllArgsConstructor;
@@ -46,6 +47,10 @@ public class CourseController {
     @GetMapping("course/{id}/lectures")
     public ResponseEntity<List<LectureDTO>> getCourseLectures(@PathVariable("id") UUID uuid){
         return new ResponseEntity<>(courseService.getCourseLectures(uuid), HttpStatus.OK);
+    }
+    @GetMapping("course/{id}/enrollments")
+    public ResponseEntity<List<EnrollmentDTO>> getCourseEnrollments(@PathVariable("id") UUID uuid){
+        return new ResponseEntity<>(courseService.getCourseEnrollments(uuid), HttpStatus.OK);
     }
 
     @PutMapping("course/{id}")

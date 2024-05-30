@@ -1,8 +1,11 @@
 package com.farid.attendancesystem.service;
 
 import com.farid.attendancesystem.dto.CourseDTO;
+import com.farid.attendancesystem.dto.EnrollmentDTO;
 import com.farid.attendancesystem.dto.LectureDTO;
+import com.farid.attendancesystem.dto.StudentDTO;
 import com.farid.attendancesystem.entity.Course;
+import com.farid.attendancesystem.entity.Enrollment;
 import com.farid.attendancesystem.entity.Lecture;
 import com.farid.attendancesystem.repository.CourseRepository;
 import lombok.AllArgsConstructor;
@@ -77,5 +80,32 @@ public class CourseService {
                 );
             }
         return lectureDTOS;
+    }
+
+    public List<EnrollmentDTO> getCourseEnrollments(UUID uuid) {
+        Course course = courseRepository.findById(uuid).orElseThrow();
+        List<EnrollmentDTO> enrollmentDTOS = new ArrayList<>();
+        if(course.getEnrollments() != null)
+            for(Enrollment enrollment: course.getEnrollments()){
+                enrollmentDTOS.add(
+                        EnrollmentDTO.builder()
+                                .id(enrollment.getId())
+                                .enrollmentDate(enrollment.getEnrollmentDate())
+                                .courseDTO(
+                                        CourseDTO.builder().id(enrollment.getCourse().getId())
+                                                .name(enrollment.getCourse().getName())
+                                                .description(enrollment.getCourse().getDescription())
+                                                .build()
+                                )
+                                .studentDTO(
+                                        StudentDTO.builder()
+                                                .id(enrollment.getStudent().getId())
+                                                .name(enrollment.getStudent().getName())
+                                                .email(enrollment.getStudent().getEmail())
+                                                .build()
+                                ).build()
+                );
+            }
+        return enrollmentDTOS;
     }
 }
