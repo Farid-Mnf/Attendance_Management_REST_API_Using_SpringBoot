@@ -16,7 +16,7 @@ public class CourseService {
     private final CourseRepository courseRepository;
 
     public CourseDTO addCourse(String name, String description){
-        Course course = new Course(UUID.randomUUID(), name, description);
+        Course course = Course.builder().name(name).description(description).build();
         course = courseRepository.save(course);
         return CourseDTO.builder().name(course.getName()).id(course.getId()).description(course.getDescription()).build();
     }
