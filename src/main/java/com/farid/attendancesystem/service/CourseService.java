@@ -1,7 +1,9 @@
 package com.farid.attendancesystem.service;
 
 import com.farid.attendancesystem.dto.CourseDTO;
+import com.farid.attendancesystem.dto.LectureDTO;
 import com.farid.attendancesystem.entity.Course;
+import com.farid.attendancesystem.entity.Lecture;
 import com.farid.attendancesystem.repository.CourseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,5 +54,28 @@ public class CourseService {
                     .build());
         }
         return courseDTOS;
+    }
+
+    public List<LectureDTO> getCourseLectures(UUID uuid) {
+        Course course = courseRepository.findById(uuid).orElseThrow();
+
+        List<LectureDTO> lectureDTOS = new ArrayList<>();
+        if(course.getLectures() != null)
+            for(Lecture lecture: course.getLectures()){
+                lectureDTOS.add(
+                        LectureDTO.builder()
+                                .id(lecture.getId())
+                                .title(lecture.getTitle())
+                                .dateTime(lecture.getDateTime())
+                                .courseDTO(
+                                        CourseDTO.builder()
+                                                .id(lecture.getCourse().getId())
+                                                .name(lecture.getCourse().getName())
+                                                .description(lecture.getCourse().getDescription())
+                                                .build()
+                                ).build()
+                );
+            }
+        return lectureDTOS;
     }
 }

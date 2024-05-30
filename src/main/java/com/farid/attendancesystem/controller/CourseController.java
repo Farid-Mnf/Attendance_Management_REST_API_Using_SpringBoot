@@ -1,6 +1,7 @@
 package com.farid.attendancesystem.controller;
 
 import com.farid.attendancesystem.dto.CourseDTO;
+import com.farid.attendancesystem.dto.LectureDTO;
 import com.farid.attendancesystem.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,11 @@ public class CourseController {
         String courseName = courseService.getCourse(uuid).getName();
         courseService.deleteCourse(uuid);
         return new ResponseEntity<>(courseName, HttpStatus.OK);
+    }
+
+    @GetMapping("course/{id}/lectures")
+    public ResponseEntity<List<LectureDTO>> getCourseLectures(@PathVariable("id") UUID uuid){
+        return new ResponseEntity<>(courseService.getCourseLectures(uuid), HttpStatus.OK);
     }
 
     @PutMapping("course/{id}")

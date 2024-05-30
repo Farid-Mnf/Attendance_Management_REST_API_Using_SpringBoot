@@ -26,10 +26,4 @@ public class Course {
     private List<Lecture> lectures;
     @OneToMany(mappedBy = "course")
     private List<Enrollment> enrollments;
-
-    public Course(UUID id, String name, String description){
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
 }
