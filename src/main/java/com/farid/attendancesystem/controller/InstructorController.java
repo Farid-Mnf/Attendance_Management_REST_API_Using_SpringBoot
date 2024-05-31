@@ -1,5 +1,6 @@
 package com.farid.attendancesystem.controller;
 
+import com.farid.attendancesystem.dto.CourseDTO;
 import com.farid.attendancesystem.dto.InstructorDTO;
 import com.farid.attendancesystem.service.InstructorService;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -33,6 +35,18 @@ public class InstructorController {
                 instructor.getEmail(),
                 instructor.getPassword()), HttpStatus.CREATED);
     }
+    @PostMapping("instructor/{id}/course")
+    public ResponseEntity<InstructorDTO> addCourseToInstructor(@PathVariable("id") UUID uuid, @RequestBody Map<String, UUID> body){
+        return new ResponseEntity<>(instructorService.addCourseToInstructor(uuid, body.get("courseId")), HttpStatus.OK);
+    }
+
+    @GetMapping("instructor/{id}/course")
+    public ResponseEntity<List<CourseDTO>> getInstructorCourses(@PathVariable("id") UUID uuid){
+        return new ResponseEntity<>(
+                instructorService.getInstructorCourses(uuid),
+                HttpStatus.OK
+        );
+    }
 
     @DeleteMapping("instructor/{id}")
     public ResponseEntity<String> deleteInstructor(@PathVariable("id") UUID uuid){
@@ -40,6 +54,8 @@ public class InstructorController {
         instructorService.removeInstructor(uuid);
         return new ResponseEntity<>(instructorName, HttpStatus.OK);
     }
+
+
 
     @PutMapping("instructor/{id}")
     public ResponseEntity<InstructorDTO> updateInstructor(@PathVariable("id") UUID uuid, @RequestBody InstructorDTO instructor){

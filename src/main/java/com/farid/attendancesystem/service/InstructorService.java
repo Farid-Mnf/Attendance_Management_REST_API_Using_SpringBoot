@@ -1,8 +1,11 @@
 package com.farid.attendancesystem.service;
 
 
+import com.farid.attendancesystem.dto.CourseDTO;
 import com.farid.attendancesystem.dto.InstructorDTO;
+import com.farid.attendancesystem.entity.Course;
 import com.farid.attendancesystem.entity.Instructor;
+import com.farid.attendancesystem.repository.CourseRepository;
 import com.farid.attendancesystem.repository.InstructorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import java.util.UUID;
 @Service
 public class InstructorService {
     private final InstructorRepository instructorRepository;
+    private final CourseRepository courseRepository;
 
     public void removeInstructor(UUID uuid){
         instructorRepository.deleteById(uuid);
@@ -63,5 +67,53 @@ public class InstructorService {
                 .name(instructor.getName())
                 .email(instructor.getEmail())
                 .password(instructor.getPassword()).build();
+    }
+
+    public InstructorDTO addCourseToInstructor(UUID uuid, UUID courseId) {
+        Instructor instructor = instructorRepository.findById(uuid).orElseThrow();
+        Course course = courseRepository.findById(courseId).orElseThrow();
+        instructor.getCourses().add(course);
+        course.setInstructor(instructor);
+
+
+        courseRepository.save(course);
+        instructor = instructorRepository.save(instructor);
+        return InstructorDTO.builder()
+                .id(instructor.getId())
+                .name(instructor.getName())
+                .email(instructor.getEmail())
+                .password(instructor.getPassword())
+                .courseDTOS(getInstructorCoursesDTOS(instructor)).build();
+    }
+
+    private List<CourseDTO> getInstructorCoursesDTOS(Instructor instructor) {
+        List<CourseDTO> courseDTOS = new ArrayList<>();
+        if(instructor.getCourses() != null)
+            for(Course course: instructor.getCourses()){
+                courseDTOS.add(
+                        CourseDTO.builder()
+                                .id(course.getId())
+                                .name(course.getName())
+                                .description(course.getDescription())
+                                .build()
+                );
+            }
+        return courseDTOS;
+    }
+
+    public List<CourseDTO> getInstructorCourses(UUID uuid) {
+        List<CourseDTO> courseDTOS = new ArrayList<>();
+        Instructor instructor = instructorRepository.findById(uuid).orElseThrow();
+        if(instructor.getCourses() != null)
+            for(Course course: instructor.getCourses()){
+                courseDTOS.add(
+                        CourseDTO.builder()
+                                .id(course.getId())
+                                .name(course.getName())
+                                .description(course.getDescription())
+                                .build()
+                );
+            }
+        return courseDTOS;
     }
 }
