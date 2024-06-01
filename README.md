@@ -1,12 +1,12 @@
 # <u>Student Attendance Management Backend System</u>
-
+[**<u>Video Demo on LinkedIn</u>**](https://www.linkedin.com/posts/farid-faisal-mohamed_demo-springboot-postgresql-activity-7202314867955916801-gDEb?utm_source=li_share&utm_content=feedcontent&utm_medium=g_dt_web&utm_campaign=copy)
 ## <u>Running the application</u>
-### Open the terminal:
+* **Make sure you have Java 17 installed on your system.**
 * **Run PostgreSQL container using Docker**:\
 `$ docker run --name attendace_database -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=attendance_db -d -p 5432:5432 postgres
 `
-* **Run the test first using Maven:** `$ ./mvnw test`
-* **Then run the application server:** `$ ./mvnw spring-boot:run` 
+* **Run the tests first using Maven:** `$ ./mvnw test`
+* **Then run the Tomcat application server:** `$ ./mvnw spring-boot:run` 
 ## <u>Technologies and Tools:</u>
 * **Java**
 * **Spring Web**: for creating RESTful API controllers.
