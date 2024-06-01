@@ -1,5 +1,13 @@
-# Student Attendance Management Backend System
-## Technologies and Tools:
+# <u>Student Attendance Management Backend System</u>
+
+## <u>Running the application</u>
+### Open the terminal:
+* **Run PostgreSQL container using Docker**:\
+`$ docker run --name attendace_database -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=attendance_db -d -p 5432:5432 postgres
+`
+* **Run the test first using Maven:** `$ ./mvnw test`
+* **Then run the application server:** `$ ./mvnw spring-boot:run` 
+## <u>Technologies and Tools:</u>
 * **Java**
 * **Spring Web**: for creating RESTful API controllers.
 * **Spring Data JPA**: using Hibernate ORM for Entity mapping and facilitating database access.
@@ -10,5 +18,5 @@
 * **Maven**: for managing our project libraries dependencies.
 * **Git/GitHub**: to commit code changes to a repository.
 * **Postman**: for testing our API endpoints.
-## Database ERD Diagram
+## <u>Database ERD Diagram</u>
 ![ERD diagram](attendance_db.png)
