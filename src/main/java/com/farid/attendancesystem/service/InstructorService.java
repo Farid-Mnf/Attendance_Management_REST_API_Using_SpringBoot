@@ -8,7 +8,9 @@ import com.farid.attendancesystem.entity.Instructor;
 import com.farid.attendancesystem.repository.CourseRepository;
 import com.farid.attendancesystem.repository.InstructorRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class InstructorService {
     private final InstructorRepository instructorRepository;
     private final CourseRepository courseRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public void removeInstructor(UUID uuid){
         instructorRepository.deleteById(uuid);
@@ -44,7 +47,7 @@ public class InstructorService {
 
         existingInstructor.setName(updatedInstructor.getName());
         existingInstructor.setEmail(updatedInstructor.getEmail());
-        existingInstructor.setPassword(updatedInstructor.getPassword());
+        existingInstructor.setPassword(passwordEncoder.encode(updatedInstructor.getPassword()));
 
         instructorRepository.save(existingInstructor);
         return InstructorDTO.builder().id(uuid).name(existingInstructor.getName())
@@ -53,7 +56,11 @@ public class InstructorService {
     }
 
     public InstructorDTO addInstructor(String name, String email, String password){
-        Instructor tempInstructor = Instructor.builder().name(name).email(email).password(password).build();
+        Instructor tempInstructor = Instructor.builder()
+                .name(name)
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .build();
         Instructor instructor = instructorRepository.save(tempInstructor);
         return InstructorDTO.builder().id(instructor.getId())
                 .name(instructor.getName())
@@ -61,6 +68,7 @@ public class InstructorService {
                 .password(instructor.getPassword()).build();
     }
 
+    @Transactional(readOnly = true)
     public InstructorDTO getInstructor(UUID uuid){
         Instructor instructor = instructorRepository.findById(uuid).orElseThrow(() -> new RuntimeException("instructor not found with id: " + uuid));
         return InstructorDTO.builder().id(instructor.getId())
