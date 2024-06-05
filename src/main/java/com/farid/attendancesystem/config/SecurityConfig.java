@@ -29,6 +29,8 @@ public class SecurityConfig {
                 auth
                         .requestMatchers("/api/course").permitAll()
                         .requestMatchers("/api/instructor").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        //  "/swagger-ui/**", "/v3/api-docs/**"
                         .anyRequest().authenticated()
 
                 ).csrf(AbstractHttpConfigurer::disable)
