@@ -34,8 +34,10 @@ public class JwtService {
                 .compact();
     }
     public boolean validateJwtToken(String jwtToken) {
+        System.out.println("validating");
         try{
             Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(jwtToken);
+            System.out.println("Validated");
             return true;
         }catch (Exception e){
             return false;
