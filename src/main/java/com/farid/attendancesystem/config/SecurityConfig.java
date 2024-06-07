@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .httpBasic(HttpBasicConfigurer::disable)
                 .formLogin(FormLoginConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
@@ -59,7 +60,6 @@ public class SecurityConfig {
 
         return authProvider;
     }
-
 
     @Bean
     public UserDetailsService userDetailsService(){
