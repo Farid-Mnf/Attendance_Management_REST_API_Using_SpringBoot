@@ -15,6 +15,7 @@ public class MyInstructorDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return instructorRepository.getInstructorByEmail(username);
+         return  instructorRepository.findInstructorByEmail(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("user not found"));
     }
 }

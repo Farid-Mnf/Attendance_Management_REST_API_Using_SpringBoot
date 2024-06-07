@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,10 +25,14 @@ import static org.mockito.Mockito.*;
 class InstructorServiceTest {
     @Mock
     private InstructorRepository instructorRepository;
+    @Mock
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @InjectMocks
     private InstructorService instructorService;
 
+
+    String encryptedPassword = "$2a$10$oJk9FZSkNWXjhnCoo7LrMePD/05u8R7EjgwOQREuoPk0cCZbhhbJG";
 
     @BeforeEach
     void setUp() {
@@ -83,7 +88,8 @@ class InstructorServiceTest {
                 .password("password").build();
         when(instructorRepository.existsById(uuid)).thenReturn(true);
         when(instructorRepository.findById(uuid)).thenReturn(Optional.of(instructor));
-        when(instructorRepository.save(instructor)).thenReturn(instructor);
+        when(instructorRepository.save(any(Instructor.class))).thenReturn(instructor);
+        when(bCryptPasswordEncoder.encode("password")).thenReturn(encryptedPassword);
 
         InstructorDTO updatedInstructor = InstructorDTO.builder().id(instructor.getId())
                 .name(instructor.getName())
@@ -95,7 +101,7 @@ class InstructorServiceTest {
         assertEquals(updatedInstructor.getId(), resultDTO.getId());
         assertEquals(updatedInstructor.getName(), resultDTO.getName());
         assertEquals(updatedInstructor.getEmail(), resultDTO.getEmail());
-        assertEquals(updatedInstructor.getPassword(), resultDTO.getPassword());
+        assertEquals(encryptedPassword, resultDTO.getPassword());
 
 
     }
@@ -107,10 +113,13 @@ class InstructorServiceTest {
                         .id(uuid).name("Farid").email("farid@gmail.com").password("password").build();
 
         when(instructorRepository.save(any(Instructor.class))).thenReturn(instructor);
+        when(bCryptPasswordEncoder.encode("password")).thenReturn(encryptedPassword);
 
         InstructorDTO instructorDTO = instructorService
-                                        .addInstructor(
-                                                instructor.getName(), instructor.getEmail(), instructor.getPassword()
+                                        .saveInstructor(
+                                                instructor.getName(),
+                                                instructor.getEmail(),
+                                                instructor.getPassword()
                                         );
 
         assertNotNull(instructorDTO);

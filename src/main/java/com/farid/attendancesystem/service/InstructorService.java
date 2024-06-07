@@ -55,7 +55,7 @@ public class InstructorService {
                 .password(existingInstructor.getPassword()).build();
     }
 
-    public InstructorDTO addInstructor(String name, String email, String password){
+    public InstructorDTO saveInstructor(String name, String email, String password){
         Instructor tempInstructor = Instructor.builder()
                 .name(name)
                 .email(email)
