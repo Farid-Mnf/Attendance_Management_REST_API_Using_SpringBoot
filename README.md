@@ -9,6 +9,7 @@
 * **Then run the Tomcat application server:** `$ ./mvnw spring-boot:run` 
 ## <u>Technologies and Tools:</u>
 * **Java**
+* **Spring Security**: for securing our RESTful APIs using JWT Bearer Tokens.
 * **Spring Web**: for creating RESTful API controllers.
 * **Spring Data JPA**: using Hibernate ORM for Entity mapping and facilitating database access.
 * **PostgreSQL database**: for storing our data.
